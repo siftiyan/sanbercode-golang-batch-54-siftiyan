@@ -1,1 +1,119 @@
+package main
+
+import "fmt"
+
+func main() {
+    // Soal 1
+    var panjangPersegiPanjang string = "8"
+    var lebarPersegiPanjang string = "5"
+
+    var alasSegitiga string = "6"
+    var tinggiSegitiga string = "7"
+
+    // Konversi variabel ke integer
+    panjang, _ := strconv.Atoi(panjangPersegiPanjang)
+    lebar, _ := strconv.Atoi(lebarPersegiPanjang)
+    alas, _ := strconv.Atoi(alasSegitiga)
+    tinggi, _ := strconv.Atoi(tinggiSegitiga)
+
+    // Hitung luas dan keliling persegi panjang
+    luasPersegiPanjang := panjang * lebar
+    kelilingPersegiPanjang := 2 * (panjang + lebar)
+
+    // Hitung luas segitiga
+    luasSegitiga := 0.5 * float64(alas*tinggi)
+
+    // Tampilkan hasil perhitungan
+    fmt.Println("Luas persegi panjang:", luasPersegiPanjang)
+    fmt.Println("Keliling persegi panjang:", kelilingPersegiPanjang)
+    fmt.Println("Luas segitiga:", luasSegitiga)
+
+    // Soal 2
+    var nilaiJohn = 80
+    var nilaiDoe = 50
+
+    // Tentukan indeks nilai
+    fmt.Print("Indeks nilai John: ")
+    if nilaiJohn >= 80 {
+        fmt.Println("A")
+    } else if nilaiJohn >= 70 {
+        fmt.Println("B")
+    } else if nilaiJohn >= 60 {
+        fmt.Println("C")
+    } else if nilaiJohn >= 50 {
+        fmt.Println("D")
+    } else {
+        fmt.Println("E")
+    }
+
+    fmt.Print("Indeks nilai Doe: ")
+    if nilaiDoe >= 80 {
+        fmt.Println("A")
+    } else if nilaiDoe >= 70 {
+        fmt.Println("B")
+    } else if nilaiDoe >= 60 {
+        fmt.Println("C")
+    } else if nilaiDoe >= 50 {
+        fmt.Println("D")
+    } else {
+        fmt.Println("E")
+    }
+
+    // Soal 3
+    var tanggal = 17
+    var bulan = 8
+    var tahun = 1945
+
+    // Switch case untuk bulan
+    var bulanStr string
+    switch bulan {
+    case 1:
+        bulanStr = "Januari"
+    case 2:
+        bulanStr = "Februari"
+    case 3:
+        bulanStr = "Maret"
+    case 4:
+        bulanStr = "April"
+    case 5:
+        bulanStr = "Mei"
+    case 6:
+        bulanStr = "Juni"
+    case 7:
+        bulanStr = "Juli"
+    case 8:
+        bulanStr = "Agustus"
+    case 9:
+        bulanStr = "September"
+    case 10:
+        bulanStr = "Oktober"
+    case 11:
+        bulanStr = "November"
+    case 12:
+        bulanStr = "Desember"
+    }
+
+    // Tampilkan hasil
+    fmt.Println("Tanggal lahir:", tanggal, bulanStr, tahun)
+
+    // Soal 4
+    var tahunLahir = 1990
+
+    // Tentukan generasi
+    var generasi string
+    if tahunLahir >= 1944 && tahunLahir <= 1964 {
+        generasi = "Baby boomer"
+    } else if tahunLahir >= 1965 && tahunLahir <= 1979 {
+        generasi = "Generasi X"
+    } else if tahunLahir >= 1980 && tahunLahir <= 1994 {
+        generasi = "Generasi Y (Millenials)"
+    } else if tahunLahir >= 1995 && tahunLahir <= 2015 {
+        generasi = "Generasi Z"
+    } else {
+        generasi = "Tidak termasuk dalam generasi yang terdefinisi"
+    }
+
+    // Tampilkan hasil
+    fmt.Println("Anda termasuk dalam generasi:", generasi)
+}
 
