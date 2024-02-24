@@ -1,0 +1,86 @@
+package main
+
+import (
+    "fmt"
+    "strings"
+)
+
+// Function to calculate the area
+func luasPersegiPanjang(panjang, lebar int) int {
+    return panjang * lebar
+}
+
+// Function to calculate the perimeter
+func kelilingPersegiPanjang(panjang, lebar int) int {
+    return 2 * (panjang + lebar)
+}
+
+// Function to calculate the volume
+func volumeBalok(panjang, lebar, tinggi int) int {
+    return panjang * lebar * tinggi
+}
+
+// Function to introduce a person
+func introduce(nama, gender, pekerjaan, umur string) string {
+    var title string
+    if gender == "laki-laki" {
+        title = "Pak "
+    } else {
+        title = "Bu "
+    }
+    return fmt.Sprintf("%s%s adalah seorang %s yang berusia %s tahun", title, nama, pekerjaan, umur)
+}
+
+// Function to display a person's favorite fruits
+func buahFavorit(nama string, buah ...string) string {
+    return fmt.Sprintf("halo nama saya %s dan buah favorit saya adalah \"%s\"", nama, strings.Join(buah, "\", \""))
+}
+
+func main() {
+    // Soal 1
+    panjang := 12
+    lebar := 4
+    tinggi := 8
+
+    luas := luasPersegiPanjang(panjang, lebar)
+    keliling := kelilingPersegiPanjang(panjang, lebar)
+    volume := volumeBalok(panjang, lebar, tinggi)
+
+    fmt.Println("Luas:", luas)
+    fmt.Println("Keliling:", keliling)
+    fmt.Println("Volume:", volume)
+
+    // Soal 2
+    john := introduce("John", "laki-laki", "penulis", "30")
+    fmt.Println(john)
+
+    sarah := introduce("Sarah", "perempuan", "model", "28")
+    fmt.Println(sarah)
+
+    // Soal 3
+    var buah = []string{"semangka", "jeruk", "melon", "pepaya"}
+    buahFavoritJohn := buahFavorit("John", buah...)
+    fmt.Println(buahFavoritJohn)
+
+    // Soal 4
+    var dataFilm = []map[string]string{}
+
+    tambahDataFilm := func(title, jam, genre, tahun string) {
+        film := map[string]string{
+            "title": title,
+            "jam":   jam,
+            "genre": genre,
+            "tahun": tahun,
+        }
+        dataFilm = append(dataFilm, film)
+    }
+
+    tambahDataFilm("LOTR", "2 jam", "action", "1999")
+    tambahDataFilm("avenger", "2 jam", "action", "2019")
+    tambahDataFilm("spiderman", "2 jam", "action", "2004")
+    tambahDataFilm("juon", "2 jam", "horror", "2004")
+
+    for _, item := range dataFilm {
+        fmt.Println(item)
+    }
+}
