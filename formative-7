@@ -1,0 +1,96 @@
+//jawaban 1
+type buah struct {
+  nama, warna string
+  adaBijinya bool
+  harga int
+}
+
+func main() {
+  buahNanas := buah{nama: "Nanas", warna: "Kuning", adaBijinya: false, harga: 9000}
+  buahJeruk := buah{nama: "Jeruk", warna: "Oranye", adaBijinya: true, harga: 8000}
+  buahSemangka := buah{nama: "Semangka", warna: "Hijau & Merah", adaBijinya: true, harga: 10000}
+  buahPisang := buah{nama: "Pisang", warna: "Kuning", adaBijinya: false, harga: 5000}
+
+  fmt.Println("Nanas:", buahNanas)
+  fmt.Println("Jeruk:", buahJeruk)
+  fmt.Println("Semangka:", buahSemangka)
+  fmt.Println("Pisang:", buahPisang)
+}
+
+//jawaban 2
+type segitiga struct {
+  alas, tinggi int
+}
+
+type persegi struct {
+  sisi int
+}
+
+type persegiPanjang struct {
+  panjang, lebar int
+}
+
+func (s segitiga) luas() int {
+  return (s.alas * s.tinggi) / 2
+}
+
+func (p persegi) luas() int {
+  return p.sisi * p.sisi
+}
+
+func (pp persegiPanjang) luas() int {
+  return pp.panjang * pp.lebar
+}
+
+func main() {
+  s := segitiga{alas: 5, tinggi: 10}
+  p := persegi{sisi: 6}
+  pp := persegiPanjang{panjang: 8, lebar: 5}
+
+  fmt.Println("Luas segitiga:", s.luas())
+  fmt.Println("Luas persegi:", p.luas())
+  fmt.Println("Luas persegi panjang:", pp.luas())
+}
+
+//jawaban 3
+type phone struct {
+  name, brand string
+  year int
+  colors []string
+}
+
+func (p *phone) addColor(color string) {
+  p.colors = append(p.colors, color)
+}
+
+func main() {
+  iphone := phone{name: "iPhone", brand: "Apple", year: 2023, colors: []string{"Merah", "Hitam", "Putih"}}
+  iphone.addColor("Biru")
+
+  fmt.Println("Nama:", iphone.name)
+  fmt.Println("Merek:", iphone.brand)
+  fmt.Println("Tahun:", iphone.year)
+  fmt.Println("Warna:", iphone.colors)
+}
+
+//jawaban 4
+type movie struct {
+  title, genre string
+  duration, year int
+}
+
+func tambahDataFilm(title string, duration, year int, genre string, dataFilm *[]movie) {
+  *dataFilm = append(*dataFilm, movie{title: title, duration: duration, year: year, genre: genre})
+}
+
+func main() {
+  var dataFilm []movie
+
+  tambahDataFilm("LOTR", 120, 1999, "action", &dataFilm)
+  tambahDataFilm("avenger", 120, 2019, "action", &dataFilm)
+  tambahDataFilm("spiderman", 120, 2004, "action", &dataFilm)
+  tambahDataFilm("juon", 120, 2004, "horror", &dataFilm)
+
+  for _, film := range dataFilm {
+    fmt.Println("1.", "title:", film.title)
+    fmt.Println
