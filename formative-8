@@ -1,0 +1,171 @@
+//jawaban 1
+
+package main
+
+import (
+	"fmt"
+)
+
+type segitigaSamaSisi struct {
+	alas, tinggi int
+}
+
+type persegiPanjang struct {
+	panjang, lebar int
+}
+
+type tabung struct {
+	jariJari, tinggi float64
+}
+
+type balok struct {
+	panjang, lebar, tinggi int
+}
+
+type hitungBangunDatar interface {
+	luas() int
+	keliling() int
+}
+
+type hitungBangunRuang interface {
+	volume() float64
+	luasPermukaan() float64
+}
+
+func (s segitigaSamaSisi) luas() int {
+	return (s.alas * s.tinggi) / 2
+}
+
+func (s segitigaSamaSisi) keliling() int {
+	return 3 * s.alas
+}
+
+func (p persegiPanjang) luas() int {
+	return p.panjang * p.lebar
+}
+
+func (p persegiPanjang) keliling() int {
+	return 2 * (p.panjang + p.lebar)
+}
+
+func (t tabung) volume() float64 {
+	return phi * t.jariJari * t.jariJari * t.tinggi
+}
+
+func (t tabung) luasPermukaan() float64 {
+	return 2 * phi * t.jariJari * (t.jariJari + t.tinggi)
+}
+
+func (b balok) volume() float64 {
+	return float64(b.panjang * b.lebar * b.tinggi)
+}
+
+func (b balok) luasPermukaan() float64 {
+	return 2 * (float64(b.panjang*b.lebar) + float64(b.lebar*b.tinggi) + float64(b.panjang*b.tinggi))
+}
+
+func main() {
+	// Bangun Datar
+	segitiga := segitigaSamaSisi{alas: 5, tinggi: 4}
+	fmt.Println("Luas segitiga sama sisi:", segitiga.luas())
+	fmt.Println("Keliling segitiga sama sisi:", segitiga.keliling())
+
+	persegi := persegiPanjang{panjang: 6, lebar: 8}
+	fmt.Println("Luas persegi panjang:", persegi.luas())
+	fmt.Println("Keliling persegi panjang:", persegi.keliling())
+
+	// Bangun Ruang
+	tabung := tabung{jariJari: 5, tinggi: 10}
+	fmt.Println("Volume tabung:", tabung.volume())
+	fmt.Println("Luas permukaan tabung:", tabung.luasPermukaan())
+
+	balok := balok{panjang: 4, lebar: 5, tinggi: 6}
+	fmt.Println("Volume balok:", balok.volume())
+	fmt.Println("Luas permukaan balok:", balok.luasPermukaan())
+}
+
+//jawaban 2
+package main
+
+import (
+	"fmt"
+)
+
+type phone struct {
+	name, brand string
+	year int
+	colors []string
+}
+
+type cetakData interface {
+	tampilData() string
+}
+
+func (p phone) tampilData() string {
+	output := fmt.Sprintf("name : %s\nbrand : %s\nyear : %d\ncolors :\n", p.name, p.brand, p.year)
+	for _, color := range p.colors {
+		output += fmt.Sprintf("  - %s\n", color)
+	}
+	return output
+}
+
+func main() {
+	phone := phone{
+		name:  "Samsung Galaxy Note 20",
+		brand: "Samsung",
+		year:  2020,
+		colors: []string{
+			"Mystic Bronze",
+			"Mystic White",
+			"Mystic Black",
+		},
+	}
+
+	data := cetakData(phone)
+	fmt.Println(data.tampilData())
+}
+
+//jawaban 3
+package main
+
+import (
+	"fmt"
+)
+
+func luasPersegi(sisi int, printInfo bool) interface{} {
+	if sisi == 0 && printInfo {
+		return "Maaf anda belum menginput sisi dari persegi"
+	} else if sisi == 0 {
+		return nil
+	}
+
+	luas := sisi * sisi
+
+//jawaban 4
+package main
+
+import (
+	"fmt"
+)
+
+var prefix interface{} = "hasil penjumlahan dari "
+var kumpulanAngkaPertama interface{} = []int{6, 8}
+var kumpulanAngkaKedua interface{} = []int{12, 14}
+
+func main() {
+	// Type assertion to convert interfaces to concrete types
+	angkaPertama := kumpulanAngkaPertama.([]int)
+	angkaKedua := kumpulanAngkaKedua.([]int)
+
+	// Sum the elements of both slices
+	var sum int
+	for _, angka := range angkaPertama {
+		sum += angka
+	}
+	for _, angka := range angkaKedua {
+		sum += angka
+	}
+
+	// Print the output using formatted string and type assertion
+	fmt.Printf("%v %d + %d + %d + %d = %d\n", prefix, angkaPertama[0], angkaPertama[1], angkaKedua[0], angkaKedua[1], sum)
+}
