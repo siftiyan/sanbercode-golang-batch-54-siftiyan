@@ -1,1 +1,79 @@
-cek
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"math"
+	"net/http"
+	"strings"
+)
+
+type Device struct {
+	Vendor string `json:"vendor"`
+	Model  string `json:"model"`
+}
+
+type Book struct {
+	Title       string `json:"title"`
+	Desc        string `json:"desc"`
+	Author      string `json:"author"`
+	ReleaseYear int    `json:"release_year"`
+}
+
+func main() {
+	// Soal 1: Decode dari JSON ke slice of map[string]string
+	data1 := `[{"vendor": "samsung", "model": "Galaxy S10"}, {"vendor": "apple", "model": "iPhone 12"}]`
+	var devices []map[string]string
+	err := json.NewDecoder(strings.NewReader(data1)).Decode(&devices)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Soal 1:")
+	for _, device := range devices {
+		if device["vendor"] == "samsung" {
+			fmt.Println(device)
+		}
+	}
+
+	// Soal 2: Decode dari JSON ke slice of struct
+	data2 := `[{"vendor": "sony", "model": "Xperia 1"}, {"vendor": "samsung", "model": "Galaxy S10"}]`
+	var devices2 []Device
+	err = json.Unmarshal([]byte(data2), &devices2)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("\nSoal 2:")
+	for _, device := range devices2 {
+		if device.Vendor == "sony" {
+			fmt.Println(device)
+		}
+	}
+
+	// Soal 3: Buat struct Book, buat slice of struct, encode ke JSON, dan tampilkan hasilnya
+	fmt.Println("\nSoal 3:")
+	books := []Book{
+		{Title: "Book 1", Desc: "Description 1", Author: "Author 1", ReleaseYear: 2020},
+		{Title: "Book 2", Desc: "Description 2", Author: "Author 2", ReleaseYear: 2021},
+		{Title: "Book 3", Desc: "Description 3", Author: "Author 3", ReleaseYear: 2022},
+		{Title: "Book 4", Desc: "Description 4", Author: "Author 4", ReleaseYear: 2023},
+		{Title: "Book 5", Desc: "Description 5", Author: "Author 5", ReleaseYear: 2024},
+	}
+	jsonData, err := json.MarshalIndent(books, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(jsonData))
+
+	// Soal 4: Web server dengan fungsi luas alas, keliling alas, dan volume tabung
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		radius := 7.0
+		height := 10.0
+		volume := math.Pi * math.Pow(radius, 2) * height
+		area := math.Pi * math.Pow(radius, 2)
+		circumference := 2 * math.Pi * radius
+		fmt.Fprintf(w, "Jari-jari: %.2f, Tinggi: %.2f\nVolume: %.2f, Luas Alas: %.2f, Keliling Alas: %.2f",
+			radius, height, volume, area, circumference)
+	})
+	fmt.Println("\nWeb server running on http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
+}
