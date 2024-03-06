@@ -1,1 +1,77 @@
+package main
+
+import (
+	"encoding/base64"
+	"encoding/json"
+	"log"
+	"net/http"
+)
+
+type NilaiMahasiswa struct {
+	Nama         string `json:"nama"`
+	MataKuliah   string `json:"mata_kuliah"`
+	IndeksNilai  string `json:"indeks_nilai"`
+	Nilai        uint   `json:"nilai"`
+	ID           uint   `json:"id"`
+}
+
+var nilaiNilaiMahasiswa = []NilaiMahasiswa{}
+
+func main() {
+	http.HandleFunc("/post", handlePost)
+	http.HandleFunc("/get", handleGet)
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func handlePost(w http.ResponseWriter, r *http.Request) {
+	// Basic Auth
+	username, password, ok := r.BasicAuth()
+	if !ok || username != "admin" || password != "admin" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	// Decode JSON request body
+	var nilai NilaiMahasiswa
+	err := json.NewDecoder(r.Body).Decode(&nilai)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Validate nilai
+	if nilai.Nilai > 100 {
+		http.Error(w, "Nilai tidak boleh lebih dari 100", http.StatusBadRequest)
+		return
+	}
+
+	// Hitung indeks nilai
+	if nilai.Nilai >= 80 {
+		nilai.IndeksNilai = "A"
+	} else if nilai.Nilai >= 70 {
+		nilai.IndeksNilai = "B"
+	} else if nilai.Nilai >= 60 {
+		nilai.IndeksNilai = "C"
+	} else if nilai.Nilai >= 50 {
+		nilai.IndeksNilai = "D"
+	} else {
+		nilai.IndeksNilai = "E"
+	}
+
+	// Set ID
+	nilai.ID = uint(len(nilaiNilaiMahasiswa) + 1)
+
+	// Tambahkan ke slice
+	nilaiNilaiMahasiswa = append(nilaiNilaiMahasiswa, nilai)
+
+	// Return response
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(nilai)
+}
+
+func handleGet(w http.ResponseWriter, r *http.Request) {
+	// Return all nilai mahasiswa
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(nilaiNilaiMahasiswa)
+}
 
